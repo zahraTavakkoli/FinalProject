@@ -1,8 +1,11 @@
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
+var passport = require('passport');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
@@ -18,6 +21,32 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'panel/build'), {maxAge: '7d', index: false}));
+
+app.use(bodyParser.urlencoded({
+  'extended': 'true'
+})); // parse application/x-www-form-urlencoded
+app.use(bodyParser.json()); // parse application/json
+app.use(bodyParser.json({
+  type: 'application/vnd.api+json'
+})); // parse application/vnd.api+json as json
+
+//*************************
+app.use(session({
+  secret: 'z@hr@',
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    maxAge: 6000000
+  }
+}));
+//*************************
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: false }))
+//*************************
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
@@ -37,5 +66,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
 
 module.exports = app;

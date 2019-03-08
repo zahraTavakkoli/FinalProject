@@ -1,3 +1,7 @@
+*{
+  box-sizing: inherit;
+}
+
 .App {
   text-align: center;
 }
@@ -9,7 +13,40 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: rgb(33, 37, 41);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  text-align: center;
+}
+
+.main{
+  margin: 0;
+}
+.left{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  z-index: 3;
+  overflow-x: hidden;
+  overflow-y: auto;
+  max-width: 40vh;
+  padding-right: 0%!important;
+  padding-left: 0%!important
+}
+.right{
+  /* padding-right: 0%!important;
+  padding-left: 0%!important; */
+  margin-left: 40vh;
+}
+
+.about-header {
+  background-color: #216605;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -20,7 +57,7 @@
 }
 
 .App-link {
-  color: #61dafb;
+  color: darksalmon;
 }
 
 @keyframes App-logo-spin {
@@ -30,4 +67,60 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.btn{
+  color: white;
+}
+.btn:hover{
+  color: darksalmon;
+}
+
+.darksalmon{
+  color: darksalmon;
+}
+
+
+
+.App1{
+  height: 100%
+}
+
+/* .left{
+  text-align: center;
+  background-color: rgb(33, 37, 41)
+} */
+/* .right{
+  margin-left: 20%
+}  */
+.penColor{
+  color: white;
+}
+
+.bgBtn{
+  background-color: black
+}
+
+/* span {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  margin: 6px;
+  background-color: #555;
+  margin-bottom: 50px;
+} */
+
+.border {
+  display: inline-block;
+  width: 70px;
+  height: 70px;
+  margin: 6px;
+}
+
+
+
+.comment{
+  padding-right: 0px;
+  padding-left: 0px;
+  margin-top: 20px!important
 }

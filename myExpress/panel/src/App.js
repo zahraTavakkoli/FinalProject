@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
+import {LoginPage, SignUpPage, NotFoundPage, ProfilePage} from './pages';
 import './App.css';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch
+} from 'react-router-dom';
+import PrivateRouter from './router/PrivateRouter';
+// import Bootstrap from 'react-bootstrap';
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+      <div>
+        <Router basename="/panel">
+          <Switch>
+            <Route path="/login" component={LoginPage}/>
+            <Route path="/signup" component={SignUpPage}/>
+            <PrivateRouter path="/profile" component={ProfilePage}/>
+            <Route component={NotFoundPage}/>
+          </Switch>
+        </Router>
       </div>
     );
   }
