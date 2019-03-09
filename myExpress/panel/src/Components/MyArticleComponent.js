@@ -1,16 +1,56 @@
 import React, { Component } from 'react';
-import { Card, Button, ButtonToolbar, Form, Collapse } from 'react-bootstrap';
+import { Card, Button, ButtonToolbar, Form, Collapse, Jumbotron, Modal } from 'react-bootstrap';
+import { Comments } from './Comments';
 import Axios from 'axios';
+
+//######################################################   MODAL  ##################################
+class MyVerticallyCenteredModal extends React.Component {
+    render() {
+        return (
+            <Modal
+                {...this.props}
+                size="lg"
+                aria-labelledby="contained-modal-title-vcenter"
+                centered
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-vcenter">
+                        Edit Your Article
+            </Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+
+                    <Form onSubmit={this.onSubmit}>
+                        <Form.Group>
+                            <Form.Label>Title:</Form.Label>
+                            <Form.Control className="px-0" name="title" type="text" />
+                        </Form.Group>
+
+                        <Form.Group>
+                            <Form.Label>Text:</Form.Label>
+                            <Form.Control className="px-0" name="text" as="textarea" rows="5" />
+                        </Form.Group>
+                    </Form>
+
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button type="submit" variant="success" style={{ color: 'white' }}>Save Changes</Button>
+                </Modal.Footer>
+            </Modal>
+        );
+    }
+}
+//################################################################################################
 
 class MyArticleComponent extends Component {
 
     constructor(props) {
         super(props);
-        // this.state = props.article;
 
         this.state = {
             error: null,
             open: false,
+            modalShow: false
         };
     }
 
@@ -35,9 +75,11 @@ class MyArticleComponent extends Component {
         this.setState({ [name]: value })
     }
 
+
     render() {
         const { article } = this.props;
         const { open } = this.state;
+        let modalClose = () => this.setState({ modalShow: false });
 
         return (
 
@@ -59,19 +101,29 @@ class MyArticleComponent extends Component {
                             style={{ color: 'white' }}>
                             View Comments
                         </Button>
-                        <Button variant="secondary mr-2 ml-auto" style={{ color: 'white' }}>Edit</Button>
+                        <Button onClick={() => this.setState({ modalShow: true })} variant="secondary mr-2 ml-auto" style={{ color: 'white' }}>Edit</Button>
+
+                        <MyVerticallyCenteredModal
+                            show={this.state.modalShow}
+                            onHide={modalClose}
+                        />
+
                         <Button variant="danger" style={{ color: 'white' }}>Delete</Button>
                     </ButtonToolbar>
 
                     <Collapse in={this.state.open}>
-                        <Form onSubmit={this.onSubmit} id="example-collapse-text">
-                            <Form.Group controlId="exampleForm.ControlTextarea1">
-                                <Form.Control name="text" className="comment" as="textarea" rows="3" />
-                            </Form.Group>
-                            <Button style={{ color: 'white' }} variant="secondary" type="submit">
-                                Add your comment...
-                            </Button>
-                        </Form>
+                        <Jumbotron className="mt-4 jumbotron">
+                            <Comments />
+                            {this.state.error && <p style={{ color: 'red' }}>Add Comment Failed</p>}
+                            <Form onSubmit={this.onSubmit} id="example-collapse-text">
+                                <Form.Group controlId="exampleForm.ControlTextarea1">
+                                    <Form.Control name="text" className="comment" as="textarea" rows="3" />
+                                </Form.Group>
+                                <Button style={{ color: 'white' }} variant="secondary" type="submit">
+                                    Add your comment...
+                                </Button>
+                            </Form>
+                        </Jumbotron>
                     </Collapse>
 
                 </Card.Footer>

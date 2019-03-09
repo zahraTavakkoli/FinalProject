@@ -2,12 +2,25 @@ import React, { Component } from 'react';
 // import {Link} from 'react-router-dom';
 import { Tab, Row, Col, Nav, Button } from 'react-bootstrap';
 import {AddNewArticle, MyArticle, AllArticle, EditProfile} from '../Components';
+import axios from 'axios';
 
 class ProfilePage extends Component {
+
+    state = {
+        profile: []
+    }
 
     logout = () => {
         localStorage.removeItem('loginData');
         window.location = "/panel/login";
+    }
+
+    componentDidMount() {
+        axios.get(`//localhost:3000/myprofile`)
+            .then(res => {
+                const profile = res.data;
+                this.setState({ profile });
+            })
     }
 
     render() {
@@ -15,6 +28,10 @@ class ProfilePage extends Component {
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                     <Row className="main">
                         <Col sm={3} className="App-header left">
+                            <p className="mb-5" style={{fontSize: '20px'}}>
+                                Welcome<br/> <span style={{color: 'darksalmon'}}>{this.state.profile.map(profile => profile.firstname +" "+ profile.lastname)}</span> 
+                            </p>
+
                             <Nav variant="pills" className="flex-column mb-5">
                                 <Nav.Item>
                                     <Nav.Link className="btn" eventKey="first">All Articles</Nav.Link>
@@ -29,7 +46,7 @@ class ProfilePage extends Component {
                                     <Nav.Link className="btn" eventKey="fourth">Edit Profile</Nav.Link>
                                 </Nav.Item>
                             </Nav>
-                            <Button style={{color: 'black'}} onClick={this.logout} variant="light mt-5">Logout</Button>
+                            <Button variant="secondary mt-5" style={{ color: 'white' }} onClick={this.logout}>Logout</Button>
                         </Col>
                         <Col sm={9} className="right">
                             <Tab.Content>

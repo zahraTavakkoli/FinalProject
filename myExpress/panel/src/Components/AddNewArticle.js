@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Container, Form, Button, Modal } from 'react-bootstrap';
 import Axios from 'axios';
 
+
 class AddNewArticle extends Component {
 
     state = {
@@ -72,7 +73,7 @@ class AddNewArticle extends Component {
                             </Modal.Footer>
                         </Modal> */}
 
-                        <Button type="submit" onClick={this.handleShow} style={{ backgroundColor: 'darksalmon', borderColor: 'darksalmon', color: 'black' }}>
+                        <Button type="submit" onClick={this.handleShow} variant="secondary" style={{ color: 'white' }}>
                             Add
                         </Button>
                     </Form>

@@ -147,6 +147,20 @@ router.get('/myarticle', function (req, res, next) {
   });
 });
 
+router.get('/myprofile', function (req, res, next) {
+
+  User.find({username: req.user.username}, function (err, contents) {
+    if (err) {
+      console.log(err.message)
+      return res.json({
+        success: false,
+        msg: "something wrong in display profile\n" + err.message
+      })
+    }
+    res.json(contents)
+  });
+});
+
 router.get('/allarticle', function (req, res, next) {
 
   Article.find({}, function (err, contents) {
@@ -162,7 +176,7 @@ router.get('/allarticle', function (req, res, next) {
 });
 
 router.post('/addcomment', (req, res) => {
-  console.log(req.body)
+  // console.log(req.body)
   // if (!req.body.username || !req.body.password) {
   //   return res.json({
   //     success: false,
@@ -172,8 +186,11 @@ router.post('/addcomment', (req, res) => {
   let comment = new Comment({
     text: req.body.text,
     createDate: new Date(),
-    username: req.user.username
+    username: req.user.username,
+    // articleID: req.article._id
   })
+
+  console.log(comment)
 
   comment.save((err, comment) => {
     if (err) {
@@ -189,5 +206,51 @@ router.post('/addcomment', (req, res) => {
     })
   })
 })
+
+
+router.get('/comment', function (req, res, next) {
+  Comment.find({}, function (err, comment) {
+    if (err) {
+      console.log(err.message)
+      return res.json({
+        success: false,
+        msg: "something wrong in display comments\n" + err.message
+      })
+    }
+    res.json(comment)
+  });
+});
+
+
+
+
+
+router.post('/editprofile', (req, res) => {
+  
+  User.update({username: req.user.username},
+    {$set: { 
+      firstname: req.body.firstname,
+      lastname: req.body.lastname,
+      username: req.body.username,
+      password: req.body.password,
+      sex: req.body.sex,
+      phone: req.body.phone,
+      role: "user"
+     }},
+     function (err, content){
+      if (err) {
+        console.log(err.message)
+        return res.json({
+          success: false,
+          msg: "something wrong in display comments\n" + err.message
+        })
+      }
+      res.json({success: true,content})
+     })
+})
+
+
+
+
 
 module.exports = router;

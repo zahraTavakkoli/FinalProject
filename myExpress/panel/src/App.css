@@ -124,3 +124,9 @@
   padding-left: 0px;
   margin-top: 20px!important
 }
+
+
+.jumbotron{
+  background-color: rgba(0,0,0,0);
+  padding: 0px;
+}

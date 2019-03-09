@@ -29,8 +29,6 @@ class MyArticle extends Component {
                     <h2 style={{ paddingBottom: 40 }}>My Articles</h2>
                     
                     {myArticles.map(article => {return <MyArticleComponent article={article}/>})}
-                    
-
                 </Container>
             </div>
         )

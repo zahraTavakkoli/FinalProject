@@ -6,7 +6,8 @@ const comment = new Schema({
         required: true,
     },
     createDate: Date,
-    username: String    
+    username: String,
+    // articleID: String
 });
 
 module.exports = mongoose.model('comment', comment);
