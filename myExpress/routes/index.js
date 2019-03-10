@@ -83,19 +83,22 @@ router.post('/signup', (req, res) => {
 router.post('/signin', passport.authenticate('local-login'), (req, res) => {
   // console.log("222222"+req.body.username);
 
-  // User.find({username: req.body.username}, (err, user)=>{
-  //   console.log(user)
-  //   if (err)
-  //     console.log(err)
-  //   res.json({
-  //     user
-  //   })
-  // })
+  User.find({username: req.body.username}, (err, user)=>{
+    console.log("##############"+user)
+    console.log("$$$$$$$"+user[0].role)
+    if (err)
+      console.log(err)
+    res.json({
+      role: user[0].role,
+      success: true,
+      msg: "you are logged in"
+    })
+  })
 
-  res.json({
-    success: true,
-    msg: "you are logged in"
-  });
+  // res.json({
+  //   success: true,
+  //   msg: "you are logged in"
+  // });
 });
 
 
@@ -250,7 +253,25 @@ router.post('/editprofile', (req, res) => {
 })
 
 
+router.post('/editarticle', (req, res) => {
+  console.log("xxxxxxxxxxxxxxxxxxxxxxxxxxxxx")
 
+  Article.update({title: req.article.title},
+    {$set: { 
+      title: req.body.title,
+      text: req.body.text
+     }},
+     function (err, content){
+      if (err) {
+        console.log(err.message)
+        return res.json({
+          success: false,
+          msg: "something wrong in display comments\n" + err.message
+        })
+      }
+      res.json({success: true,content})
+     })
+})
 
 
 module.exports = router;

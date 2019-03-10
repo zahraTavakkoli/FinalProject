@@ -4,7 +4,7 @@ import { Tab, Row, Col, Nav, Button } from 'react-bootstrap';
 import {AddNewArticle, MyArticle, AllArticle, EditProfile} from '../Components';
 import axios from 'axios';
 
-class ProfilePage extends Component {
+class AdminProfilePage extends Component {
 
     state = {
         profile: []
@@ -82,4 +82,4 @@ class ProfilePage extends Component {
     }
 }
 
-export { ProfilePage }
+export { AdminProfilePage }

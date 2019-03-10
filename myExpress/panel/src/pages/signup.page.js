@@ -92,12 +92,12 @@ class SignUpPage extends Component {
                                 </Button>
 
                             </Form>
-                            <p style={{fontSize: 15, marginTop: 30}}>Have an account with us? <a href="/panel/login" style={{color: 'darksalmon'}}>Login Now!</a></p>
+                            <p style={{ fontSize: 15, marginTop: 30 }}>Have an account with us? <a href="/panel/login" style={{ color: 'darksalmon' }}>Login Now!</a></p>
+                            <p style={{ fontSize: 16, marginTop: 30 }}><a href="/" style={{ color: 'white' }}>Back to home</a></p>
                             {error && <p style={{ color: 'red' }}>Sign Up Failed</p>}
                         </Col>
                     </Row>
                 </Container>
-                
             </div>
         );
     }

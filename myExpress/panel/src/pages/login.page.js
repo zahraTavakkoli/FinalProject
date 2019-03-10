@@ -15,13 +15,24 @@ class LoginPage extends Component {
         }
         Axios.post('//localhost:3000/signin',data)
         .then(response=>{
-            if (response.data.success){
+            if (response.data.role === 'user'){
                 localStorage.setItem('loginData',JSON.stringify(data));
                 window.location = '/panel/profile';
-            }else {
+                console.log(response.data.user)
+            }
+            else if (response.data.role === 'admin'){
+                localStorage.setItem('loginData',JSON.stringify(data));
+                window.location = '/panel/adminprofile';
+                console.log(response.data.user)
+            }
+            else {
+                console.log(response.data.user)
+                console.log(response.data.role)
                 this.setState({error: true})
             }
+            
         })
+        console.log(data.user)
     }
 
 
@@ -51,6 +62,7 @@ class LoginPage extends Component {
 
                             </Form>
                             <p style={{fontSize: 15, marginTop: 30}}>Not registered? <a href="/panel/signup" style={{color: 'darksalmon'}}>Create an account</a></p>
+                            <p style={{fontSize: 16, marginTop: 30}}><a href="/" style={{color: 'white'}}>Back to home</a></p>
                             {this.state.error && <p style={{ color: 'red' }}>Login Failed</p>}
                         </Col>
                     </Row>

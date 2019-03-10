@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {LoginPage, SignUpPage, NotFoundPage, ProfilePage} from './pages';
+import {LoginPage, SignUpPage, NotFoundPage, ProfilePage, AdminProfilePage} from './pages';
 import './App.css';
 import {
   BrowserRouter as Router,
@@ -7,7 +7,7 @@ import {
   Switch
 } from 'react-router-dom';
 import PrivateRouter from './router/PrivateRouter';
-// import Bootstrap from 'react-bootstrap';
+import AdminPrivateRouter from './router/AdminPrivateRouter';
 
 class App extends Component {
   render() {
@@ -18,6 +18,7 @@ class App extends Component {
             <Route path="/login" component={LoginPage}/>
             <Route path="/signup" component={SignUpPage}/>
             <PrivateRouter path="/profile" component={ProfilePage}/>
+            <AdminPrivateRouter path="/adminprofile" component={AdminProfilePage}/>
             <Route component={NotFoundPage}/>
           </Switch>
         </Router>

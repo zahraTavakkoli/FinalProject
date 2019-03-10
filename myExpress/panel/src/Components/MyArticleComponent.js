@@ -3,8 +3,31 @@ import { Card, Button, ButtonToolbar, Form, Collapse, Jumbotron, Modal } from 'r
 import { Comments } from './Comments';
 import Axios from 'axios';
 
-//######################################################   MODAL  ##################################
+//######################################   MODAL  ##################################
 class MyVerticallyCenteredModal extends React.Component {
+
+    state= {
+        error: null
+    }
+
+    Submit = (event) => {
+        event.preventDefault();
+        const data = {
+            title: event.target["title"].value,
+            text: event.target["text"].value,
+            FCM: '1'
+        }
+        Axios.post('//localhost:3000/editarticle', data)
+            .then(response => {
+                if (response.data.success) {
+                    window.location = '/panel/profile';
+                } else {
+                    this.setState({ error: true })
+                }
+            })
+        console.log(data)
+    }
+
     render() {
         return (
             <Modal
@@ -16,26 +39,25 @@ class MyVerticallyCenteredModal extends React.Component {
                 <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-vcenter">
                         Edit Your Article
-            </Modal.Title>
+                    </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
 
-                    <Form onSubmit={this.onSubmit}>
+                    <Form onSubmit={this.Submit}>
                         <Form.Group>
                             <Form.Label>Title:</Form.Label>
-                            <Form.Control className="px-0" name="title" type="text" />
+                            <Form.Control className="px-0" name="title" type="text"/>
                         </Form.Group>
 
                         <Form.Group>
                             <Form.Label>Text:</Form.Label>
-                            <Form.Control className="px-0" name="text" as="textarea" rows="5" />
+                            <Form.Control className="px-0" name="text" as="textarea" rows="5"/>
                         </Form.Group>
+                        <Button type="submit" variant="success ml-auto" style={{ color: 'white' }}>Save Changes</Button>
                     </Form>
+                    {this.state.error && <p style={{ color: 'red' }}>Edit Article Failed</p>}
 
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button type="submit" variant="success" style={{ color: 'white' }}>Save Changes</Button>
-                </Modal.Footer>
+                </Modal.Body>                                   
             </Modal>
         );
     }
